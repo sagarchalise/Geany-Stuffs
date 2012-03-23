@@ -7,24 +7,25 @@
 #       it under the terms of the GNU General Public License as published by
 #       the Free Software Foundation; either version 2 of the License, or
 #       (at your option) any later version.
-#       
+#
 #       This program is distributed in the hope that it will be useful,
 #       but WITHOUT ANY WARRANTY; without even the implied warranty of
 #       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #       GNU General Public License for more details.
-#       
+#
 #       You should have received a copy of the GNU General Public License
 #       along with this program; if not, write to the Free Software
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
-#       
-#       
+#
+#
 
 import sys
 import os
+import subprocess
 
 
-file_types = ['py', 'php', 'js']
+file_types = ['py', 'php', 'js', 'java', 'lua']
 
 
 def main(arg):
@@ -34,10 +35,9 @@ def main(arg):
     if os.path.isdir(directory):
         for k in file_types:
             if filetype == k:
-                cmd = 'geany -g %s.%s.tags $(find %s -name \*.%s)' \
-                        % (name, k, directory, k)
-        os.chdir(os.path.expanduser('~/.config/geany/tags'))
-        os.system(cmd)
+                cmd = 'geany -g %s/%s.%s.tags $(find %s -name \*.%s)' \
+                        % (os.path.expanduser('~/.config/geany/tags'),name, k, directory, k)
+        subprocess.call(cmd)
     else:
         print 'No Such path'
         sys.exit()
